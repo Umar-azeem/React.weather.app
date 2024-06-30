@@ -13,10 +13,17 @@ import { Myimg } from "./image/Myimg";
 
 function App() {
 
-  const [city, setCity] = useState("london");
+  const [city, setCity] = useState("london"); // []
   const [weather, setWeather] = useState({});
   const [img, setImg] = useState("");
+  const obj = {
+    name:'hello',
+    age:21
+  }
+  console.log("ssssss",weather)
+  const checkIsArray = weather?.list && Array.isArray(weather?.list) && weather.list.length > 0
 
+  const listItem = checkIsArray ? weather.list.slice(0, 4).map((item,i) => <div className="flex flex-row justify-between">{i}:{item.main.temp}<Myimg img={img} weather={weather} /></div>) : []
   useEffect(() => {
     // if (weather?.weather?.[0]?.main) {
     //   setImg(weather?.weather[0]?.main);
@@ -27,7 +34,7 @@ function App() {
   const getWeatherbyCity = async () => {
     const weatherData = await getWeather(city);
     setWeather(weatherData);
-    setImg(weatherData?.weather[0]?.main);
+    setImg(weatherData?.city?.main);
     console.log(weatherData);
     setCity("");
   }
@@ -50,10 +57,16 @@ function App() {
 
             <div className="flex flex-col justify-center w-full h-auto px-10">
               <div className="flex justify-between mt-10">
-                <h1 className="text-3xl font-semibold">{weather.name}</h1>
-                <h1 className="text-2xl font-semibold">{weather?.main?.temp}°C</h1>
+                <h1 className="text-3xl font-semibold">{weather?.city?.name}</h1>
+                
+              
               </div>
-             <Myimg img={img} weather={weather} />
+              <div className="grid grid-cols-2 gap-4">
+
+                {listItem}
+              </div>
+  
+              
              {/* this should be written is this format only no need to change that */}
 
               <div className="flex justify-between mt-3 mb-4">
@@ -69,7 +82,7 @@ function App() {
               </div>
               <div className="flex justify-center">
                 <img src={wind} alt="Wind Speed" width={50} height={20} />
-                <h4 className="px-2">Wind speed<br />{weather?.wind?.speed} km/h</h4>
+                <h4 className="px-2">Wind speed<br />{weather?.list?.wind?.speed} km/h</h4>
               </div>
             </div>
 
