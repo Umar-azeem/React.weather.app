@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import getWeather from "./api/Api";
 import clear from "./img/clear.png";
